@@ -32,5 +32,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server Running...`.white);
+    console.log(`Server Running...${PORT}`.white);
 });

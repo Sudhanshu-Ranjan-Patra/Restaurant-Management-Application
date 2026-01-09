@@ -32,6 +32,7 @@ const resisterController = async (req, res) => {
     res.status(201).send({
         success: true,
         message: "Successfully Registered",
+        user,
     })
   } catch (error) {
     console.log(error);

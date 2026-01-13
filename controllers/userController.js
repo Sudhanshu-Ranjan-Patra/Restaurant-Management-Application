@@ -1,4 +1,5 @@
 const userModel = require("../models/userModel");
+const bcrypt = require("bcryptjs");
 
 const getUserController = async (req, res) => {
   try {
@@ -86,14 +87,17 @@ const updatePasswordController = async (req, res) => {
         success: false,
         message: "Invalid Old Password!",
         });
-    } 
+    }
     
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.password = hashedPassword;
+
     //save update
     await user.save();
     res.status(200).send({
       success: true,
       message: "Password updated Successfully",
-      user,
     });
 
   } catch (error) {

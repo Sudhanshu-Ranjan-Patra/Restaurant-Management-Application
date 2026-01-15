@@ -20,7 +20,6 @@ module.exports = async (req, res, next) => {
           message: "Unauthorized user",
         });
       }
-
       //store authenticated user
       req.user = decode;
       next();

@@ -17,4 +17,7 @@ router.put("/updateUser", authMiddleware, updateUserController);
 //Update Password Route
 router.put("/updatePassword", authMiddleware, updatePasswordController);
 
+//Forget Password Route
+router.put("/forgetPassword", authMiddleware);
+
 module.exports = router;

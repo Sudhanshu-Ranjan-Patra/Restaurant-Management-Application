@@ -38,11 +38,11 @@ const updateUserController = async (req, res) => {
       });
     }
     //update
-    const {userName, phone, address, profile} = req.body;
-    if(userName) user.userName = userName;
-    if(phone) user.phone = phone;
-    if(address) user.address = address;
-    if(profile) user.profile = profile;
+    const { userName, phone, address, profile } = req.body;
+    if (userName) user.userName = userName;
+    if (phone) user.phone = phone;
+    if (address) user.address = address;
+    if (profile) user.profile = profile;
 
     //save update
     await user.save();
@@ -51,7 +51,6 @@ const updateUserController = async (req, res) => {
       message: "User updated Successfully",
       user,
     });
-
   } catch (error) {
     res.status(500).send({
       success: false,
@@ -61,7 +60,7 @@ const updateUserController = async (req, res) => {
   }
 };
 
-//updaate Password 
+//updaate Password
 const updatePasswordController = async (req, res) => {
   try {
     const user = await userModel.findById(req.user.id);
@@ -72,23 +71,23 @@ const updatePasswordController = async (req, res) => {
       });
     }
     //get data from user
-    const {oldPassword, newPassword} = req.body;
-    if(!oldPassword || !newPassword){
-        return res.status(404).send({
-            success: false,
-            message: "Please Provide Old and New Password",
-        });
+    const { oldPassword, newPassword } = req.body;
+    if (!oldPassword || !newPassword) {
+      return res.status(404).send({
+        success: false,
+        message: "Please Provide Old and New Password",
+      });
     }
 
     //update new password
-    const isMatch = await bcrypt.compare(oldPassword , user.password);
-    if(!isMatch){
-        return res.status(404).send({
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(404).send({
         success: false,
         message: "Invalid Old Password!",
-        });
+      });
     }
-    
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
     user.password = hashedPassword;
@@ -99,7 +98,6 @@ const updatePasswordController = async (req, res) => {
       success: true,
       message: "Password updated Successfully",
     });
-
   } catch (error) {
     res.status(500).send({
       success: false,
@@ -111,7 +109,6 @@ const updatePasswordController = async (req, res) => {
 
 const forgetPasswordController = async (req, res) => {
   try {
-    
   } catch (error) {
     res.status(500).send({
       success: false,
@@ -119,5 +116,9 @@ const forgetPasswordController = async (req, res) => {
       error: error.message,
     });
   }
-}
-module.exports = { getUserController ,updateUserController ,updatePasswordController};
+};
+module.exports = {
+  getUserController,
+  updateUserController,
+  updatePasswordController,
+};

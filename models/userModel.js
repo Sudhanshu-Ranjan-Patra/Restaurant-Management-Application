@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
         "https://www.svgrepo.com/show/384670/account-avatar-profile-user.svg",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("User", userSchema);

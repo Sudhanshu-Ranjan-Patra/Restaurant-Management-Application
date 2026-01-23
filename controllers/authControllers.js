@@ -35,6 +35,7 @@ const registerController = async (req, res) => {
         usertype,
     });
 
+    
     res.status(201).send({
         success: true,
         message: "Successfully Registered",

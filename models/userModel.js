@@ -34,6 +34,13 @@ const userSchema = new mongoose.Schema(
       default:
         "https://www.svgrepo.com/show/384670/account-avatar-profile-user.svg",
     },
+    resetPasswordToken: {
+      type: String
+    },
+    resetPasswordExpire: {
+      type: Date,
+    },
+    
   },
   { timestamps: true },
 );

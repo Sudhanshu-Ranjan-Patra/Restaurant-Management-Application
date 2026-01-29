@@ -3,6 +3,7 @@ const {
   getUserController,
   updateUserController,
   updatePasswordController,
+  forgetPasswordController
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -18,6 +19,6 @@ router.put("/updateUser", authMiddleware, updateUserController);
 router.put("/updatePassword", authMiddleware, updatePasswordController);
 
 //Forget Password Route
-router.put("/forgetPassword", authMiddleware);
+router.put("/forgetPassword", authMiddleware, forgetPasswordController);
 
 module.exports = router;

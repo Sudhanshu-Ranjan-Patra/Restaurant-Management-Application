@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 
 const getUserController = async (req, res) => {
   try {
@@ -88,6 +89,12 @@ const updatePasswordController = async (req, res) => {
       });
     }
 
+    if(newPassword.length < 6){
+      return res.status(400).send({
+        success: false,
+        message: "Password must be at least 6 characters"
+      })
+    }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
     user.password = hashedPassword;
@@ -109,6 +116,43 @@ const updatePasswordController = async (req, res) => {
 
 const forgetPasswordController = async (req, res) => {
   try {
+    const { email } = req.body;
+
+    if(!email){
+      return res.status(400).send({
+        success: false,
+        message: "Please provide email",
+      });
+    }
+
+    const user = await userModel.findOne({ email });
+    if(!user) {
+      return res.status(400).send({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    //Generation reset token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    user.resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+      //Token expiry (15 min)
+      user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+      await user.save({ validateBeforeSave: false });
+      const resetUrl = `${process.env.FRONTEND_URL}/reseet-password/${resetToken}`;
+
+      console.log("Reset Password URL:", resetUrl);
+      
+      res.status(200).send({
+        success: true,
+        message: "Password reset link send",
+      });
   } catch (error) {
     res.status(500).send({
       success: false,
@@ -121,4 +165,5 @@ module.exports = {
   getUserController,
   updateUserController,
   updatePasswordController,
+  forgetPasswordController,
 };

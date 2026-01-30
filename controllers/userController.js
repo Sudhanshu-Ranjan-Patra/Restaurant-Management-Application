@@ -89,11 +89,11 @@ const updatePasswordController = async (req, res) => {
       });
     }
 
-    if(newPassword.length < 6){
+    if (newPassword.length < 6) {
       return res.status(400).send({
         success: false,
-        message: "Password must be at least 6 characters"
-      })
+        message: "Password must be at least 6 characters",
+      });
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -118,7 +118,7 @@ const forgetPasswordController = async (req, res) => {
   try {
     const { email } = req.body;
 
-    if(!email){
+    if (!email) {
       return res.status(400).send({
         success: false,
         message: "Please provide email",
@@ -126,7 +126,7 @@ const forgetPasswordController = async (req, res) => {
     }
 
     const user = await userModel.findOne({ email });
-    if(!user) {
+    if (!user) {
       return res.status(400).send({
         success: false,
         message: "User not found",
@@ -141,18 +141,18 @@ const forgetPasswordController = async (req, res) => {
       .update(resetToken)
       .digest("hex");
 
-      //Token expiry (15 min)
-      user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+    //Token expiry (15 min)
+    user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
 
-      await user.save({ validateBeforeSave: false });
-      const resetUrl = `${process.env.FRONTEND_URL}/reseet-password/${resetToken}`;
+    await user.save({ validateBeforeSave: false });
+    const resetUrl = `${process.env.FRONTEND_URL}/reseet-password/${resetToken}`;
 
-      console.log("Reset Password URL:", resetUrl);
-      
-      res.status(200).send({
-        success: true,
-        message: "Password reset link send",
-      });
+    console.log("Reset Password URL:", resetUrl);
+
+    res.status(200).send({
+      success: true,
+      message: "Password reset link send",
+    });
   } catch (error) {
     res.status(500).send({
       success: false,

@@ -161,9 +161,15 @@ const forgetPasswordController = async (req, res) => {
     });
   }
 };
+
+const resetPasswordController = async (req, res) => {
+
+}
+
 module.exports = {
   getUserController,
   updateUserController,
   updatePasswordController,
   forgetPasswordController,
+  resetPasswordController,
 };

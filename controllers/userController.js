@@ -163,8 +163,15 @@ const forgetPasswordController = async (req, res) => {
 };
 
 const resetPasswordController = async (req, res) => {
-
-}
+  try {
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error in Update Password API",
+      error: error.message,
+    });
+  }
+};
 
 module.exports = {
   getUserController,

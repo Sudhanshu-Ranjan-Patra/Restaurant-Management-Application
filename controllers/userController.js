@@ -161,7 +161,6 @@ const forgetPasswordController = async (req, res) => {
     });
   }
 };
-
 const resetPasswordController = async (req, res) => {
   try {
     

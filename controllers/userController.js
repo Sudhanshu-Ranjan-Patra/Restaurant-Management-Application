@@ -145,7 +145,7 @@ const forgetPasswordController = async (req, res) => {
     user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
 
     await user.save({ validateBeforeSave: false });
-    const resetUrl = `${process.env.FRONTEND_URL}/reseet-password/${resetToken}`;
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
     console.log("Reset Password URL:", resetUrl);
 
@@ -164,12 +164,76 @@ const forgetPasswordController = async (req, res) => {
 
 const resetPasswordController = async (req, res) => {
   try {
-    
+    const { token } = req.params;
+    const { password, confirmPassword } = req.body;
+
+    //validation
+    if(!password || !confirmPassword){
+      return res.status(400).send({
+        success: false,
+        message: "Please Provide password and confirm password"
+      });
+    }
+
+    if(password !== confirmPassword){
+      return res.status(400).send({
+        success: false,
+        message: "Password do not match"
+      });
+    }
+
+    // hash token 
+    const hasdedToken = crypto
+      .createHash("sha256")
+      .update((token))
+      .digest("hex");
+
+    //find user
+    const user = await userModel.findOne({
+      resetPasswordToken: hasdedToken,
+      resetPasswordExpire: {$gt: Date.now()},
+    });
+
+    if(!user){
+      return res.status(400).send({
+        success: false,
+        message: "Reset token is invalid or expired"
+      })
+    }
+
+    // update password 
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    res.status(200).send({
+      success: true,
+      message: "Password reset successfully",
+    });
   } catch (error) {
     res.status(500).send({
       success: false,
       message: "Error in Update Password API",
       error: error.message,
+    });
+  }
+};
+
+const deleteProfileController = async (req, res) => {
+  try {
+    await userModel.findByIdAndDelete(req.params.id);
+    return res.status(200).send({
+      success: true,
+      message: "Your account has been deleted",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Erorr In Delete Profile API",
+      error,
     });
   }
 };
@@ -180,4 +244,5 @@ module.exports = {
   updatePasswordController,
   forgetPasswordController,
   resetPasswordController,
+  deleteProfileController
 };

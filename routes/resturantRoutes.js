@@ -10,7 +10,6 @@ const {
 
 const router = express.Router();
 
-//routes
 // CRAETE RESTURANT 
 router.post("/create", authMiddleware, createResturantController);
 

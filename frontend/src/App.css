@@ -1,0 +1,103 @@
+.App {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+h1 {
+  margin: 0;
+}
+
+h2 {
+  margin-top: 24px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.card h3 {
+  margin: 0 0 4px;
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: #555;
+  min-height: 36px;
+}
+
+.price {
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+button {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  background: #1976d2;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cart-section {
+  margin-top: 24px;
+}
+
+.cart-list {
+  list-style: none;
+  padding: 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+
+.cart-item button {
+  background: #d32f2f;
+}
+
+.total {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.primary-btn {
+  margin-top: 8px;
+}
+
+.error {
+  background: #ffebee;
+  color: #c62828;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}

@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
     if (user.usertype !== "admin") {
       return res.status(401).send({
         success: false,
-        message: "Only Admin ACess ",
+        message: "Only Admin Access ",
       });
     } else {
       next();

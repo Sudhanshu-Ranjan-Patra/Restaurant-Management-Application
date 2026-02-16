@@ -39,5 +39,5 @@ const PORT = process.env.PORT || 5000;
 
 //listen
 app.listen(PORT, () => {
-  console.log(`Server running on ${PORT}`.white.bgMagenta);
+  console.log(`Server running on ${PORT}`.white);
 });

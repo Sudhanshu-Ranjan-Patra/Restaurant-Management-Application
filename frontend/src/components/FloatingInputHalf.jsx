@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function FloatingInput({ label, type = "text", name, value, onChange }) {
+function FloatingInputHalf({ label, type = "text", name, value, onChange }) {
   const [focused, setFocused] = useState(false);
 
   return (
@@ -14,7 +14,7 @@ function FloatingInput({ label, type = "text", name, value, onChange }) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(value !== "" ? true : false)}
         placeholder=""
-        className="w-full px-3 py-3 border border-gray-300 rounded-md bg-[#F7F8F9] focus:outline-none focus:border-purple-600"
+        className="w-1/2 px-3 py-3 border border-gray-300 rounded-md bg-[#F7F8F9] focus:outline-none focus:border-purple-600"
         autoComplete={type === "password" ? "current-password" : undefined}
       />
       <label
@@ -31,4 +31,4 @@ function FloatingInput({ label, type = "text", name, value, onChange }) {
   );
 }
 
-export default FloatingInput;
+export default FloatingInputHalf;

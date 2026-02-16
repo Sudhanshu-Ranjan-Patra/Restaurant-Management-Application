@@ -5,13 +5,22 @@ const JWT = require("jsonwebtoken");
 //Register
 const registerController = async (req, res) => {
   try {
-    const { userName, email, password, phone, address, usertype } = req.body;
-    //validation
-    if (!userName || !email || !password || !phone || !address || !usertype) {
-      return res.status(500).send({
+    const { userName, email, password, phone, usertype, address } = req.body;
+
+    if (
+      !userName ||
+      !email ||
+      !password ||
+      !phone ||
+      !usertype ||
+      !address?.country ||
+      !address?.state ||
+      !address?.district ||
+      !address?.pincode
+    ) {
+      return res.status(400).send({ 
         success: false,
-        message: "Please Provide All Fields",
-      });
+        message: "Please Provide All Fields" });
     }
 
     const exisiting = await userModel.findOne({ email });
@@ -35,10 +44,16 @@ const registerController = async (req, res) => {
       usertype,
     });
 
+    //Token
+    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
     res.status(201).send({
       success: true,
       message: "Successfully Registered",
       user,
+      token,
     });
   } catch (error) {
     console.log(error);

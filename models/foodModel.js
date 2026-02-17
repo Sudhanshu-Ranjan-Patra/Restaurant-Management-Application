@@ -1,54 +1,68 @@
 const mongoose = require("mongoose");
 
-//schema
 const foodSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Food Title is require"],
+      required: [true, "Food title is required"],
+      trim: true,
     },
+
     description: {
       type: String,
-      required: [true, " food description is requir"],
+      required: [true, "Food description is required"],
     },
+
     price: {
       type: Number,
-      required: [true, "food price is require"],
+      required: [true, "Food price is required"],
+      min: 0,
     },
+
     imageUrl: {
       type: String,
       default:
-        "https://image.similarpng.com/very-thumbnail/2021/09/Good-food-logo-design-on-transparent-background-PNG.png",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj1o8EVP1S4RpOBMrkRZw0xp7hTvSA63FFjFLJfGH3Mg&s",
     },
+
     foodTags: {
-      type: String,
+      type: [String], 
     },
-    catgeory: {
+
+    category: {
       type: String,
+      enum: ["Veg Meal", "Dessert", "Drinks", "Fast Food"],
     },
+
     code: {
       type: String,
+      unique: true,
     },
-    isAvailabe: {
+
+    isAvailable: {
       type: Boolean,
       default: true,
     },
-    resturnat: {
+
+    restaurant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Resturant",
+      required: true,
     },
+
     rating: {
       type: Number,
       default: 5,
       min: 1,
       max: 5,
     },
+
     ratingCount: {
-      type: String,
+      type: Number,
+      default: 0,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-//export
-module.exports = mongoose.model("Foods", foodSchema);
+module.exports = mongoose.model("Food", foodSchema);

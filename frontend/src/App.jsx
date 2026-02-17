@@ -4,6 +4,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
+import FoodManagement from "./pages/FoodManagement";
+
+
 
 function App() {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
@@ -28,6 +32,14 @@ function App() {
         <Route
           path="/profile"
           element={token ? <Profile /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/dashboard"
+          element={token ? <Dashboard /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/food"
+          element={token ? <FoodManagement /> : <Navigate to="/login" />}
         />
       </Routes>
     </BrowserRouter>

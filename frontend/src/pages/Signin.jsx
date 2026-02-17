@@ -27,19 +27,17 @@ function Signin() {
             );
 
             if (res.data.success) {
-                console.log("Login Successful ✅");
-
-                // Save token
                 localStorage.setItem("token", res.data.token);
 
-                // Navigate to profile/dashboard
-                navigate("/profile");
+                console.log("Token saved:", localStorage.getItem("token"));
+
+                navigate("/profile", { replace: true });
             } else {
                 alert(res.data.message);
             }
         } catch (error) {
             console.log(error.response?.data);
-            alert("Login Failed: "+ error.response?.data.message);
+            alert("Login Failed: " + error.response?.data.message);
         }
     };
 

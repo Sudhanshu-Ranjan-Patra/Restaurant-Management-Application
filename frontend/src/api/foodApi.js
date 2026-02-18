@@ -1,6 +1,6 @@
 import API from "./axios";
 
-export const getAllFoods = () => API.get("/food/all");
+export const getAllFoods = () => API.get("/food/getAll");
 
 export const createFood = (data) =>
   API.post("/food/create", data);

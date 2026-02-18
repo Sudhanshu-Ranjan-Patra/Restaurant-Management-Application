@@ -7,8 +7,6 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import FoodManagement from "./pages/FoodManagement";
 
-
-
 function App() {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
 

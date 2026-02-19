@@ -22,7 +22,7 @@ function FoodManagement() {
       const { data } = await getAllFoods();
       setFoods(data.foods || []);
     } catch (err) {
-      setError("Failed to load foods"+ err);
+      setError("Failed to load foods" + err);
     } finally {
       setLoading(false);
     }

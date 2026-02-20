@@ -10,47 +10,51 @@ const createFoodController = async (req, res) => {
       price,
       imageUrl,
       foodTags,
-      catgeory,
+      category,
       code,
-      isAvailabe,
-      resturnat,
+      isAvailable,
+      restaurant,
       rating,
     } = req.body;
 
-    if (!title || !description || !price || !resturnat) {
-      return res.status(500).send({
+    if (!title || !description || !price || !restaurant) {
+      return res.status(400).send({
         success: false,
-        message: "Please Provide all fields",
+        message: "Please provide all required fields",
       });
     }
+
     const newFood = new foodModal({
       title,
       description,
       price,
       imageUrl,
       foodTags,
-      catgeory,
+      category,
       code,
-      isAvailabe,
-      resturnat,
+      isAvailable,
+      restaurant,
       rating,
     });
 
     await newFood.save();
+
     res.status(201).send({
       success: true,
       message: "New Food Item Created",
       newFood,
     });
+
   } catch (error) {
-    console.log(error);
+    console.log("Create Food Error:", error);
     res.status(500).send({
       success: false,
       message: "Error in create food api",
-      error,
+      error: error.message,
     });
   }
 };
+
 
 // GET ALLL FOODS
 const getAllFoodsController = async (req, res) => {
@@ -118,7 +122,7 @@ const getFoodByResturantController = async (req, res) => {
         message: "please provide id",
       });
     }
-    const food = await foodModal.find({ resturnat: resturantId });
+    const food = await foodModal.find({ restaurant: resturantId });
     if (!food) {
       return res.status(404).send({
         success: false,
@@ -163,10 +167,10 @@ const updateFoodController = async (req, res) => {
       price,
       imageUrl,
       foodTags,
-      catgeory,
+      category,
       code,
-      isAvailabe,
-      resturnat,
+      isAvailable,
+      restaurant,
       rating,
     } = req.body;
     const updatedFood = await foodModal.findByIdAndUpdate(
@@ -177,10 +181,10 @@ const updateFoodController = async (req, res) => {
         price,
         imageUrl,
         foodTags,
-        catgeory,
+        category,
         code,
-        isAvailabe,
-        resturnat,
+        isAvailable,
+        restaurant,
         rating,
       },
       { new: true }

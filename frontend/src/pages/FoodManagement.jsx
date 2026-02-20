@@ -6,6 +6,7 @@ import {
   deleteFood,
 } from "../api/foodApi";
 import FoodFormModal from "../components/FoodFormModal";
+import { getAllResturants } from "../api/resturantApi";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 
 function FoodManagement() {
@@ -15,6 +16,7 @@ function FoodManagement() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedFood, setSelectedFood] = useState(null);
+  const [restaurants, setRestaurants] = useState([]);
 
   const fetchFoods = async () => {
     try {
@@ -30,6 +32,10 @@ function FoodManagement() {
 
   useEffect(() => {
     fetchFoods();
+    // Fetch restaurants
+    getAllResturants().then(({ data }) => {
+      setRestaurants(data.resturants || []);
+    }).catch(() => setRestaurants([]));
   }, []);
 
   const handleSubmit = async (formData) => {
@@ -147,6 +153,7 @@ function FoodManagement() {
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleSubmit}
         initialData={selectedFood}
+        restaurants={restaurants}
       />
 
       <ConfirmDeleteModal

@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 
-function FoodFormModal({ isOpen, onClose, onSubmit, initialData }) {
+function FoodFormModal({ isOpen, onClose, onSubmit, initialData, restaurants = [] }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: "",
+    restaurant: "",
   });
 
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData);
+      setFormData({
+        title: initialData.title || "",
+        description: initialData.description || "",
+        price: initialData.price || "",
+        restaurant: initialData.restaurant || "",
+      });
     }
   }, [initialData]);
 
@@ -52,6 +58,7 @@ function FoodFormModal({ isOpen, onClose, onSubmit, initialData }) {
             required
           />
 
+
           <textarea
             placeholder="Description"
             className="w-full border p-2 rounded"
@@ -61,6 +68,29 @@ function FoodFormModal({ isOpen, onClose, onSubmit, initialData }) {
             }
             required
           />
+
+          <select
+            className="w-full border p-2 rounded"
+            value={formData.restaurant}
+            onChange={(e) =>
+              setFormData({ ...formData, restaurant: e.target.value })
+            }
+            required
+          >
+            <option value="">Select Restaurant</option>
+            {restaurants.length === 0 && (
+                <>
+                  <option value="65d4c7f1e1a1a1a1a1a1a1a1">RedX 1</option>
+                  <option value="65d4c7f1e1a1a1a1a1a1a1a2">RedX 2</option>
+                  <option value="65d4c7f1e1a1a1a1a1a1a1a3">RedX 3</option>
+                </>
+              )}
+            {restaurants.map((rest) => (
+              <option key={rest._id} value={rest._id}>
+                {rest.title}
+              </option>
+            ))}
+          </select>
 
           <div className="flex justify-end space-x-3 pt-4">
             <button

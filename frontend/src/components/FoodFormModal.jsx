@@ -79,12 +79,12 @@ function FoodFormModal({ isOpen, onClose, onSubmit, initialData, restaurants = [
           >
             <option value="">Select Restaurant</option>
             {restaurants.length === 0 && (
-                <>
-                  <option value="65d4c7f1e1a1a1a1a1a1a1a1">RedX 1</option>
-                  <option value="65d4c7f1e1a1a1a1a1a1a1a2">RedX 2</option>
-                  <option value="65d4c7f1e1a1a1a1a1a1a1a3">RedX 3</option>
-                </>
-              )}
+              <>
+                <option value="65d4c7f1e1a1a1a1a1a1a1a1">RedX 1</option>
+                <option value="65d4c7f1e1a1a1a1a1a1a1a2">RedX 2</option>
+                <option value="65d4c7f1e1a1a1a1a1a1a1a3">RedX 3</option>
+              </>
+            )}
             {restaurants.map((rest) => (
               <option key={rest._id} value={rest._id}>
                 {rest.title}

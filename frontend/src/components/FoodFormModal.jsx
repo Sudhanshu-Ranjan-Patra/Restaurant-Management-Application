@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
 
+// Helper to generate random 8-character alphanumeric code
+function generateRandomCode(length = 8) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
 function FoodFormModal({ isOpen, onClose, onSubmit, initialData, restaurants = [] }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     price: "",
     restaurant: "",
+    code: "",
   });
 
   useEffect(() => {
@@ -15,6 +26,15 @@ function FoodFormModal({ isOpen, onClose, onSubmit, initialData, restaurants = [
         description: initialData.description || "",
         price: initialData.price || "",
         restaurant: initialData.restaurant || "",
+        code: initialData.code || "",
+      });
+    } else {
+      setFormData({
+        title: "",
+        description: "",
+        price: "",
+        restaurant: "",
+        code: generateRandomCode(),
       });
     }
   }, [initialData]);
@@ -44,6 +64,16 @@ function FoodFormModal({ isOpen, onClose, onSubmit, initialData, restaurants = [
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
+            required
+          />
+
+          <div
+            className="cursor-not-allowed hidden"
+            value={formData.code}
+            readOnly={!initialData}
+            onChange={initialData ? (e) =>
+              setFormData({ ...formData, code: e.target.value })
+            : undefined}
             required
           />
 

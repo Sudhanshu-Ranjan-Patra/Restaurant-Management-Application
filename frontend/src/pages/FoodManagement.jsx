@@ -39,6 +39,11 @@ function FoodManagement() {
   }, []);
 
   const handleSubmit = async (formData) => {
+    // Ensure code is present and not empty
+    // if (!formData.code || formData.code.trim() === "") {
+    //   alert("Code is required and must be unique.");
+    //   return;
+    // }
     try {
       if (selectedFood) {
         await updateFood(selectedFood._id, formData);
@@ -112,13 +117,13 @@ function FoodManagement() {
                 <th className="p-4 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="justify-center text-center">
               {foods.map((food) => (
                 <tr
                   key={food._id}
                   className="border-t hover:bg-gray-50 transition"
                 >
-                  <td className="p-4 font-medium">{food.title}</td>
+                  <td className="p-4 font-medium ">{food.title}</td>
                   <td className="p-4">₹{food.price}</td>
                   <td className="p-4 flex justify-center gap-4">
                     <button

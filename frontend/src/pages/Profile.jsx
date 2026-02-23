@@ -75,8 +75,8 @@ function Profile() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    // Clear auth cookie
+    document.cookie = "token=; path=/; max-age=0";
     navigate("/login");
   };
 

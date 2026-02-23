@@ -62,11 +62,15 @@ function Signup() {
       if (res.data.success) {
         setSuccess("Account created successfully ");
 
-        localStorage.setItem("token", res.data.token);
+        // Store token in cookie instead of localStorage
+        document.cookie = `token=${encodeURIComponent(
+          res.data.token
+        )}; path=/; max-age=${60 * 60 * 24 * 7}`;
 
+        // Hard redirect to dashboard so auth state is fresh
         setTimeout(() => {
-          navigate("/dashboard");
-        }, 1500);
+          window.location.href = "/dashboard";
+        }, 800);
       }
     } catch (err) {
       setError(

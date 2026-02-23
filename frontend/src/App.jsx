@@ -1,6 +1,6 @@
 
-import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { getCookie } from "./api/axios";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
@@ -10,17 +10,8 @@ import OrderManagement from "./pages/OrderManagement";
 import PlaceOrder from "./pages/PlaceOrder";
 import RestaurantManagement from "./pages/RestaurantManagement";
 import CategoryManagement from "./pages/CategoryManagement";
-
-
-
 function App() {
-  const [token, setToken] = useState(() => localStorage.getItem("token"));
-
-  useEffect(() => {
-    const handler = () => setToken(localStorage.getItem("token"));
-    window.addEventListener("storage", handler);
-    return () => window.removeEventListener("storage", handler);
-  }, []);
+  const token = getCookie("token");
 
   return (
     <BrowserRouter>
@@ -29,8 +20,8 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
 
         {/* Auth Routes */}
-        <Route path="/login" element={<Signin setToken={setToken} />} />
-        <Route path="/signup" element={<Signup setToken={setToken}/>} />
+        <Route path="/login" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
 
         {/* Protected Route */}
         <Route

@@ -27,11 +27,13 @@ function Signin() {
             );
 
             if (res.data.success) {
-                localStorage.setItem("token", res.data.token);
+                // Store token in cookie instead of localStorage
+                document.cookie = `token=${encodeURIComponent(
+                    res.data.token
+                )}; path=/; max-age=${60 * 60 * 24 * 7}`;
 
-                console.log("Token saved:", localStorage.getItem("token"));
-
-                navigate("/dashboard", { replace: true });
+                // Use hard redirect to ensure router re-evaluates auth
+                window.location.href = "/dashboard";
             } else {
                 alert(res.data.message);
             }

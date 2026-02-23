@@ -5,10 +5,19 @@ const API = axios.create({
   withCredentials: true,
 });
 
-// Attach token automatically
+// Simple helper to read a cookie by name
+export function getCookie(name) {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(
+    new RegExp("(^|; )" + name.replace(/([.*+?^${}()|[\\]\\\\])/g, "\\$1") + "=([^;]*)")
+  );
+  return match ? decodeURIComponent(match[2]) : null;
+}
+
+// Attach token automatically from cookie
 API.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = getCookie("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -22,7 +31,10 @@ API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("token");
+      // Clear cookie (client-side)
+      if (typeof document !== "undefined") {
+        document.cookie = "token=; path=/; max-age=0";
+      }
       window.location.href = "/login";
     }
     return Promise.reject(error);
@@ -30,3 +42,4 @@ API.interceptors.response.use(
 );
 
 export default API;
+

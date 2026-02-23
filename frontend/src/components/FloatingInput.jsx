@@ -15,7 +15,15 @@ function FloatingInput({ label, type = "text", name, value, onChange }) {
         onBlur={() => setFocused(value !== "" ? true : false)}
         placeholder=""
         className="w-full px-3 py-3 border border-gray-300 rounded-md bg-[#F7F8F9] focus:outline-none focus:border-purple-600"
-        autoComplete={type === "password" ? "current-password" : undefined}
+        autoComplete={
+          type === "password"
+            ? "current-password"
+            : name === "email"
+            ? "email"
+            : name === "username" || name === "userName"
+            ? "username"
+            : undefined
+        }
       />
       <label
         htmlFor={name}

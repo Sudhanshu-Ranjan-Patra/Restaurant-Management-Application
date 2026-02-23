@@ -19,9 +19,9 @@ const createResturantController = async (req, res) => {
         } = req.body;
 
         if (!title || !coords) {
-      return res.status(500).send({
+      return res.status(400).send({
         success: false,
-        message: "please provide title and address",
+        message: "Please provide restaurant title and address (coords)",
       });
     }
     const newResturant = new resturantModel({
@@ -30,7 +30,7 @@ const createResturantController = async (req, res) => {
       foods,
       time,
       pickup,
-      delivery,
+      delivery: delivary,
       isOpen,
       logoUrl,
       rating,

@@ -31,7 +31,7 @@ function Signin() {
 
                 console.log("Token saved:", localStorage.getItem("token"));
 
-                navigate("/profile", { replace: true });
+                navigate("/dashboard", { replace: true });
             } else {
                 alert(res.data.message);
             }

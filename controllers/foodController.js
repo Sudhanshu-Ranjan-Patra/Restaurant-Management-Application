@@ -302,6 +302,26 @@ const orderStatusController = async (req, res) => {
   }
 };
 
+// GET ALL ORDERS WITH POPULATED FIELDS
+const getAllOrdersController = async (req, res) => {
+  try {
+    const orders = await orderModel.find({})
+      .populate('foods', 'title')
+      .populate('buyer', 'name');
+    res.status(200).send({
+      success: true,
+      orders,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: 'Error fetching all orders',
+      error,
+    });
+  }
+};
+
 module.exports = {
   createFoodController,
   getAllFoodsController,
@@ -311,4 +331,5 @@ module.exports = {
   deleteFoodController,
   placeOrderController,
   orderStatusController,
+  getAllOrdersController,
 };

@@ -10,10 +10,14 @@ const {
   deleteFoodController,
   placeOrderController,
   orderStatusController,
+  getAllOrdersController,
 } = require("../controllers/foodController");
-const adminMiddleware = require("../middlewares/adminMiddleware");
 
 const router = express.Router();
+const adminMiddleware = require("../middlewares/adminMiddleware");
+
+// GET ALL ORDERS
+router.get("/all-orders", authMiddleware, getAllOrdersController);
 
 //routes
 //CREATE FOOD

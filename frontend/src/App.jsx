@@ -6,6 +6,12 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import FoodManagement from "./pages/FoodManagement";
+import OrderManagement from "./pages/OrderManagement";
+import PlaceOrder from "./pages/PlaceOrder";
+import RestaurantManagement from "./pages/RestaurantManagement";
+import CategoryManagement from "./pages/CategoryManagement";
+
+
 
 function App() {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
@@ -38,6 +44,22 @@ function App() {
         <Route
           path="/food"
           element={token ? <FoodManagement /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/order"
+          element={token ? <OrderManagement /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/placeorder"
+          element={token ? <PlaceOrder /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/restaurants"
+          element={token ? <RestaurantManagement /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/categories"
+          element={token ? <CategoryManagement /> : <Navigate to="/login" />}
         />
       </Routes>
     </BrowserRouter>

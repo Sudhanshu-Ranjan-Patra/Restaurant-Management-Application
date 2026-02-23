@@ -65,7 +65,7 @@ function Signup() {
         localStorage.setItem("token", res.data.token);
 
         setTimeout(() => {
-          navigate("/profile");
+          navigate("/dashboard");
         }, 1500);
       }
     } catch (err) {

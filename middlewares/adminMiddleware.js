@@ -2,8 +2,16 @@ const userModel = require("../models/userModel");
 
 module.exports = async (req, res, next) => {
   try {
-    const user = await userModel.findById(req.body.id);
-    if (user.usertype !== "admin") {
+    // Use req.user._id from authMiddleware
+    const userId = req.user?._id;
+    if (!userId) {
+      return res.status(401).send({
+        success: false,
+        message: "User not authenticated",
+      });
+    }
+    const user = await userModel.findById(userId);
+    if (!user || user.usertype !== "admin") {
       return res.status(401).send({
         success: false,
         message: "Only Admin Access ",

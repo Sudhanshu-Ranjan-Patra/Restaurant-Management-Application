@@ -1,89 +1,54 @@
-import { NavLink, useLocation } from "react-router-dom";
-import { LayoutDashboard, ShoppingCart, List, Utensils, Store, Tags, User } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { ShoppingCart, List, Utensils, User } from "lucide-react";
 
 function Navbar() {
   const location = useLocation();
 
   const navLinks = [
     {
-      to: "/dashboard",
-      label: "Dashboard",
-      icon: <LayoutDashboard size={18} />,
-    },
-    {
-      to: "/order",
-      label: "Orders",
-      icon: <List size={20} />,
-    },
-    {
-      to: "/food",
-      label: "Foods",
-      icon: <Utensils size={20} />,
-    },
-    {
-      to: "/restaurants",
-      label: "Restaurants",
-      icon: <Store size={20} />,
-    },
-    {
-      to: "/categories",
-      label: "Categories",
-      icon: <Tags size={20} />,
-    },
-    {
-      to: "/placeorder",
-      label: "Place Order",
+      to: "/place-order",
+      label: "Order Food",
       icon: <ShoppingCart size={20} />,
+      role: "customer",
+    },
+    {
+      to: "/order-management",
+      label: "Order Management",
+      icon: <List size={20} />,
+      role: "admin",
+    },
+    {
+      to: "/food-management",
+      label: "Food Management",
+      icon: <Utensils size={20} />,
+      role: "admin",
     },
     {
       to: "/profile",
       label: "Profile",
       icon: <User size={20} />,
+      role: "all",
     },
   ];
 
   // You can add role-based filtering here if needed
 
   return (
-    <nav className="bg-white border-b flex items-center justify-between px-6 py-3">
-      <div className="flex items-center gap-2">
-        <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-purple-600 text-white font-semibold">
-          R
-        </span>
-        <div className="flex flex-col">
-          <div className="font-semibold text-gray-900 text-sm">
-            RedX Restaurant Manager
-          </div>
-          <div className="text-xs text-gray-500">
-            {location.pathname === "/dashboard" ? "Overview" : "Admin Panel"}
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-4">
+    <nav className="bg-white shadow flex items-center px-6 py-3">
+      <div className="font-bold text-xl text-purple-700 mr-8">Restaurant App</div>
+      <div className="flex gap-6">
         {navLinks.map((link) => (
-          <NavLink
+          <Link
             key={link.to}
             to={link.to}
-            className={({ isActive }) =>
-              `hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full text-sm transition-colors ${
-                isActive
-                  ? "bg-purple-100 text-purple-700"
-                  : "text-gray-600 hover:bg-gray-100"
-              }`
-            }
+            className={`flex items-center gap-2 px-3 py-2 rounded transition text-gray-700 hover:bg-purple-100 hover:text-purple-700 ${
+              location.pathname === link.to ? "bg-purple-100 text-purple-700" : ""
+            }`}
           >
             {link.icon}
             <span>{link.label}</span>
-          </NavLink>
+          </Link>
         ))}
-
-        <NavLink
-          to="/profile"
-          className="inline-flex md:hidden items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-gray-700"
-        >
-          <User size={18} />
-        </NavLink>
       </div>
     </nav>
   );

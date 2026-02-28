@@ -2,7 +2,7 @@ const userModel = require("../models/userModel");
 
 module.exports = async (req, res, next) => {
   try {
-    // Use req.user._id from authMiddleware
+
     const userId = req.user?._id;
     if (!userId) {
       return res.status(401).send({

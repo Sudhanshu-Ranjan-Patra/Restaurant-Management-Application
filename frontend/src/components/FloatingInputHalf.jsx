@@ -20,11 +20,10 @@ function FloatingInputHalf({ label, type = "text", name, value, onChange }) {
       <label
         htmlFor={name}
         className={`absolute left-3 transition-all duration-200 pointer-events-none
-        ${
-          focused
+        ${focused
             ? "text-xs -top-2 text-[#6C25FF] bg-[#F7F8F9] px-1"
             : "text-gray-500 top-3"
-        }`}>
+          }`}>
         {label}
       </label>
     </div>

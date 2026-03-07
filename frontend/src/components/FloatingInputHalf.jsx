@@ -5,6 +5,7 @@ function FloatingInputHalf({ label, type = "text", name, value, onChange }) {
 
   return (
     <div className="relative w-screen max-w-[335px] mb-3">
+      
       <input
         id={name}
         name={name}
